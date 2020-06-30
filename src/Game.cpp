@@ -3,6 +3,7 @@
 //
 
 #include "Game.h"
+#include "glm.hpp"
 #include <iostream>
 
 Game::Game() {
@@ -60,16 +61,13 @@ void Game::ProcessInput() {
     }
 }
 
-float renderTestX = 0.0f;
-float renderTestXVelocity = 20.0f;
-float renderTestY = 0.0f;
-float renderTestYVelocity = 30.0f;
+auto renderTestPosition = glm::vec2(0.0f, 0.0f);
+auto renderTestVelocity = glm::vec2(20.0f, 30.0f);
 
 void Game::Update() {
     float deltaTime = handleDeltaTime();
 
-    renderTestX += renderTestXVelocity * deltaTime;
-    renderTestY += renderTestYVelocity * deltaTime;
+    renderTestPosition = glm::vec2(renderTestPosition.x + renderTestVelocity.x * deltaTime, renderTestPosition.y + renderTestVelocity.y * deltaTime);
 }
 
 float Game::handleDeltaTime() {
@@ -94,8 +92,8 @@ void Game::Render() {
     SDL_RenderClear(this->renderer);
 
     SDL_Rect renderTest{
-            (int) renderTestX,
-            (int) renderTestY,
+            (int) renderTestPosition.x,
+            (int) renderTestPosition.y,
             (int) renderTestXSize,
             (int) renderTestYSize
     };

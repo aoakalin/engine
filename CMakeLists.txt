@@ -12,7 +12,9 @@ set(SDL2_LIB_DIR lib/SDL2-x86_64-w64-mingw32/lib)
 set(LUA_INCLUDE_DIR lib/lua-5.3.5_Win64_dllw6_lib/include)
 set(LUA_LIB_DIR lib/lua-5.3.5_Win64_dllw6_lib)
 
-include_directories(${SDL2_INCLUDE_DIR} ${LUA_INCLUDE_DIR})
+set(GLM_INCLUDE_DIR lib/glm)
+
+include_directories(${SDL2_INCLUDE_DIR} ${LUA_INCLUDE_DIR} ${GLM_INCLUDE_DIR})
 link_directories(${SDL2_LIB_DIR} ${LUA_LIB_DIR})
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
