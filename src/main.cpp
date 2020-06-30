@@ -12,15 +12,11 @@ int main(int argv, char** args) {
     auto game = new Game();
     game->Initialize(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
 
-    std::cout << "Initialized VARTS Engine..." << std::endl;
-
     while (game->IsRunning()) {
         game->ProcessInput();
         game->Update();
         game->Render();
     }
-
-    std::cout << "Shutting down VARTS Engine..." << std::endl;
 
     game->Destroy();
 
