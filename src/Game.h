@@ -36,6 +36,8 @@ public:
     void Render();
 
     void Destroy();
+
+    float handleDeltaTime();
 };
 
 

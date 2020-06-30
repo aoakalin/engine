@@ -64,24 +64,36 @@ float renderTestX = 0.0f;
 float renderTestXVelocity = 20.0f;
 float renderTestY = 0.0f;
 float renderTestYVelocity = 30.0f;
+
 void Game::Update() {
-    while (!SDL_TICKS_PASSED(SDL_GetTicks(), this->ticksLastFrame + this->frameTargetTime));
-    Uint32 ticks = SDL_GetTicks();
-    float deltaTime = (ticks - this->ticksLastFrame) / 1000.0f;
-    deltaTime = (deltaTime > this->frameTargetTime) ? this->frameTargetTime : deltaTime;
-    this->ticksLastFrame = ticks;
+    float deltaTime = handleDeltaTime();
 
     renderTestX += renderTestXVelocity * deltaTime;
     renderTestY += renderTestYVelocity * deltaTime;
 }
 
+float Game::handleDeltaTime() {
+    unsigned int timeToWait = frameTargetTime - (SDL_GetTicks() - ticksLastFrame);
+    if (timeToWait > 0 && timeToWait <= frameTargetTime) {
+        SDL_Delay(timeToWait);
+    }
+//    while (!SDL_TICKS_PASSED(SDL_GetTicks(), this->ticksLastFrame + this->frameTargetTime));
+
+    Uint32 ticks = SDL_GetTicks();
+    float deltaTime = (ticks - this->ticksLastFrame) / 1000.0f;
+    deltaTime = (deltaTime > this->frameTargetTime) ? this->frameTargetTime : deltaTime;
+    this->ticksLastFrame = ticks;
+    return deltaTime;
+}
+
 float renderTestXSize = 10.0f;
 float renderTestYSize = 10.0f;
+
 void Game::Render() {
     SDL_SetRenderDrawColor(this->renderer, 21, 21, 21, 255);
     SDL_RenderClear(this->renderer);
 
-    SDL_Rect renderTest {
+    SDL_Rect renderTest{
             (int) renderTestX,
             (int) renderTestY,
             (int) renderTestXSize,
