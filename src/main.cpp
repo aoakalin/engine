@@ -6,10 +6,10 @@
 #include "Constants.h"
 #include <iostream>
 
-int main() {
+int main(int argv, char** args) {
     std::cout << "Starting VARTS Engine..." << std::endl;
 
-    Game *game = new Game();
+    auto game = new Game();
     game->Initialize(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
 
     std::cout << "Initialized VARTS Engine..." << std::endl;
