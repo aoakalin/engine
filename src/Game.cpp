@@ -11,9 +11,10 @@ Game::Game() {
 
 Game::~Game() = default;
 
-void Game::Initialize(int width, int height) {
+void Game::Initialize(unsigned int width, unsigned int height, unsigned int frameTargetTime) {
     this->width = width;
     this->height = height;
+    this->frameTargetTime = frameTargetTime;
 
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         std::cerr << "Error initializing SDL..." << std::endl;
@@ -60,12 +61,18 @@ void Game::ProcessInput() {
 }
 
 float renderTestX = 0.0f;
-float renderTestXVelocity = 0.1f;
+float renderTestXVelocity = 20.0f;
 float renderTestY = 0.0f;
-float renderTestYVelocity = 0.1f;
+float renderTestYVelocity = 30.0f;
 void Game::Update() {
-    renderTestX += renderTestXVelocity;
-    renderTestY += renderTestYVelocity;
+    while (!SDL_TICKS_PASSED(SDL_GetTicks(), this->ticksLastFrame + this->frameTargetTime));
+    Uint32 ticks = SDL_GetTicks();
+    float deltaTime = (ticks - this->ticksLastFrame) / 1000.0f;
+    deltaTime = (deltaTime > this->frameTargetTime) ? this->frameTargetTime : deltaTime;
+    this->ticksLastFrame = ticks;
+
+    renderTestX += renderTestXVelocity * deltaTime;
+    renderTestY += renderTestYVelocity * deltaTime;
 }
 
 float renderTestXSize = 10.0f;

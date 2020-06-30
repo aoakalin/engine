@@ -10,7 +10,7 @@ int main(int argv, char** args) {
     std::cout << "Starting VARTS Engine..." << std::endl;
 
     auto game = new Game();
-    game->Initialize(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
+    game->Initialize(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT, MAIN_FRAME_TARGET_TIME);
 
     while (game->IsRunning()) {
         game->ProcessInput();

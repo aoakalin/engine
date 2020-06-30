@@ -15,15 +15,17 @@ private:
     SDL_Window *window;
     SDL_Renderer *renderer;
     bool isRunning;
-    int width;
-    int height;
+    unsigned int width;
+    unsigned int height;
+    unsigned int frameTargetTime;
+    unsigned int ticksLastFrame;
 
 public:
     Game();
 
     ~Game();
-    
-    void Initialize(int width, int height);
+
+    void Initialize(unsigned int width, unsigned int height, unsigned int frameTargetTime);
 
     bool IsRunning() const;
 
