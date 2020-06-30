@@ -14,19 +14,26 @@ CMakeLists.txt contains every information, however, as a high level summary:
   lua-5.3.5_Win64_dllw6_lib.zip
 
 Contents of those files must be placed on a folder called lib at the project root level. The folder structure for lib is shown below:
-
-  lib
-    lua-5.3.5_Win64_dllw6_lib
-      include
-        ...
-      liblua53.a
-      lua53.dll
-    SDL2-x86_64-w64-mingw32
-      bin
-        ...
-      include
-        ...
-      lib
-        ...
-      share
-        ...
+```
+lib
+│
+└───lua-5.3.5_Win64_dllw6_lib
+│   │   liblua53.a
+│   │   lua53.dll
+│   │
+│   └───include
+│       │   ...
+│   
+└───SDL2-x86_64-w64-mingw32
+│   └───bin
+│   │   │   ...
+│   │   
+│   └───include
+│   │   │   ...
+│   │   
+│   └───lib
+│   │   │   ...
+│   │   
+│   └───share
+│   │   │   ...
+```
