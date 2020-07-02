@@ -4,7 +4,12 @@
 
 #include "Game.h"
 #include "glm.hpp"
+#include "EntityManager.h"
+#include "Components/TransformComponent.h"
 #include <iostream>
+
+EntityManager manager;
+SDL_Renderer *Game::renderer;
 
 Game::Game() {
     this->isRunning = false;
@@ -30,12 +35,14 @@ void Game::Initialize(unsigned int width, unsigned int height, unsigned int fram
         return;
     }
 
-    this->renderer = SDL_CreateRenderer(this->window, -1, 0);
+    Game::renderer = SDL_CreateRenderer(this->window, -1, 0);
 
-    if (!this->renderer) {
+    if (!Game::renderer) {
         std::cerr << "Error creating SDL renderer..." << std::endl;
         return;
     }
+
+    LoadLevel(0);
 
     this->isRunning = true;
 }
@@ -61,13 +68,9 @@ void Game::ProcessInput() {
     }
 }
 
-auto renderTestPosition = glm::vec2(0.0f, 0.0f);
-auto renderTestVelocity = glm::vec2(20.0f, 30.0f);
-
 void Game::Update() {
     float deltaTime = handleDeltaTime();
-
-    renderTestPosition = glm::vec2(renderTestPosition.x + renderTestVelocity.x * deltaTime, renderTestPosition.y + renderTestVelocity.y * deltaTime);
+    manager.Update(deltaTime);
 }
 
 float Game::handleDeltaTime() {
@@ -84,21 +87,14 @@ float Game::handleDeltaTime() {
     return deltaTime;
 }
 
-float renderTestXSize = 10.0f;
-float renderTestYSize = 10.0f;
-
 void Game::Render() {
     SDL_SetRenderDrawColor(this->renderer, 21, 21, 21, 255);
     SDL_RenderClear(this->renderer);
 
-    SDL_Rect renderTest{
-            (int) renderTestPosition.x,
-            (int) renderTestPosition.y,
-            (int) renderTestXSize,
-            (int) renderTestYSize
-    };
-    SDL_SetRenderDrawColor(this->renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(this->renderer, &renderTest);
+    if (manager.HasNoEntities()) {
+        return;
+    }
+    manager.Render();
 
     SDL_RenderPresent(this->renderer);
 }
@@ -107,4 +103,10 @@ void Game::Destroy() {
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
     SDL_Quit();
+}
+
+void Game::LoadLevel(int levelNumber) {
+    //todo implement later
+    Entity &newEntity(manager.AddEntity("test"));
+    newEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
 }

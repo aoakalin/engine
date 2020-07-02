@@ -5,15 +5,12 @@
 #ifndef ENGINE_GAME_H
 #define ENGINE_GAME_H
 
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
 
 class Game {
 private:
     SDL_Window *window;
-    SDL_Renderer *renderer;
     bool isRunning;
     unsigned int width;
     unsigned int height;
@@ -28,6 +25,10 @@ public:
     void Initialize(unsigned int width, unsigned int height, unsigned int frameTargetTime);
 
     bool IsRunning() const;
+
+    static SDL_Renderer *renderer;
+
+    void LoadLevel(int levelNumber);
 
     void ProcessInput();
 
